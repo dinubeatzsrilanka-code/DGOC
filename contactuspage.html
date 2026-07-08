@@ -174,7 +174,6 @@
             border-radius: 16px;
             padding: 35px;
         }
-
         .form-group {
             margin-bottom: 22px;
         }
@@ -243,6 +242,7 @@
             transition: 0.3s;
         }
         .btn-submit:hover { background: #cbd5e1; }
+        .btn-submit:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; }
 
         /* Hidden Admin Panel Style */
         .admin-panel {
@@ -264,10 +264,20 @@
             margin-bottom: 30px;
         }
         .admin-header h2 { color: #4ade80; font-size: 26px; }
+        
+        .btn-clear {
+            background: #e11d48; color: white; border: none;
+            padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;
+            margin-right: 10px;
+        }
+        .btn-clear:hover { background: #be123c; }
+
         .btn-logout {
-            background: #ef4444; color: white; border: none;
+            background: #4b5563; color: white; border: none;
             padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;
         }
+        .btn-logout:hover { background: #374151; }
+
         .msg-box {
             background: #060b13;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -299,15 +309,13 @@
 </head>
 <body>
 
-    <!-- Top Bar -->
     <div class="top-utility-bar">
         <a href="#" class="logo-text">DINU <span>GROUP</span></a>
-        <a href="dinugroupofcompanies.html" class="btn-home">← Back to Services</a>
+        <a href="index.html" class="btn-home">← Back to Services</a>
     </div>
 
     <div class="contact-wrapper">
         
-        <!-- CLIENT INTERFACE GRID -->
         <div class="contact-grid" id="clientGrid">
             <div class="contact-info-panel">
                 <h1>Let's Connect with DINU Group</h1>
@@ -335,157 +343,16 @@
                 </div>
             </div>
 
-            <!-- Form Workspace -->
-            <div class="contact-form-panel">
-                <form id="contactForm">
+            
+<div class="contact-form-panel">
+                <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+                    
+                    <input type="hidden" name="access_key" value="32d9aa6a-f867-4c51-8ecb-17f1d05b7030">
+                    
+                    <input type="hidden" name="subject" value="New Project Requirement - DINU GROUP Website">
+                    <input type="checkbox" name="botcheck" style="display: none;">
+
                     <div class="form-group">
                         <label for="name">Your Name / Company Name</label>
-                        <!-- input එක ටයිප් කරද්දීම චෙක් කරන්න oninput එකක් දැම්මා -->
-                        <input type="text" id="name" placeholder="Ex: ABC Pvt Ltd" oninput="checkSecretKey(this.value)">
+                        <input type="text" name="name" id="name" placeholder="Ex: ABC Pvt Ltd" required oninput="checkSecretKey(this.value)">
                     </div>
-                    <div class="form-group">
-                        <label for="email">Business Email Address</label>
-                        <input type="email" id="email" placeholder="name@company.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Project Requirements / Message</label>
-                        <textarea id="message" rows="4" placeholder="Describe the cleaning or corporate services plan required..."></textarea>
-                    </div>
-                    <!-- File Attachment Block -->
-                    <div class="form-group">
-                        <label>Attach Project Specifications / Files (Optional)</label>
-                        <div class="file-input-wrapper">
-                            <span class="file-label-text" id="fileStatus">📁 Click here to upload documents (PDF, Images)</span>
-                            <input type="file" id="fileAttachment" accept=".pdf, .png, .jpg, .jpeg, .doc, .docx">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-submit">Dispatch Message</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- SECRET ADMIN PANEL INTERFACE -->
-        <div class="admin-panel" id="adminPanel">
-            <div class="admin-header">
-                <h2>DINU GROUP - Internal Messages Desk</h2>
-                <button class="btn-logout" onclick="closeAdmin()">Exit Dashboard</button>
-            </div>
-            <div id="messagesContainer">
-                <!-- Messages will load dynamically here -->
-            </div>
-        </div>
-
-    </div>
-
-    <footer>
-        <p>&copy; 2026 DINU GROUP OF COMPANIES. All Rights Reserved.</p>
-    </footer>
-
-    <script>
-        const SECRET_KEY = "DINU@2026"; // ඔයාගේ රහස් Key එක! 🤫
-        let attachedFileData = "";
-        let attachedFileName = "";
-
-        // Instant Secret Key Scanner (බටන් එක ඔබන්න ඕනෙම නැහැ!)
-        function checkSecretKey(value) {
-            if (value.trim() === SECRET_KEY) {
-                openAdmin();
-                document.getElementById('contactForm').reset();
-                document.getElementById('fileStatus').innerText = "📁 Click here to upload documents (PDF, Images)";
-            }
-        }
-
-        // Handle File Loading into Base64 for LocalStorage
-        document.getElementById('fileAttachment').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                attachedFileName = file.name;
-                document.getElementById('fileStatus').innerText = "✅ Attached: " + file.name;
-                
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    attachedFileData = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Form Submit Handler for Regular Clients
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nameValue = document.getElementById('name').value.trim();
-            const emailValue = document.getElementById('email').value.trim();
-            const messageValue = document.getElementById('message').value.trim();
-
-            if (!nameValue || !emailValue || !messageValue) {
-                alert("Please fill in Name, Email, and Message fields.");
-                return;
-            }
-
-            // Client Message Save Flow
-            const newMsg = {
-                id: Date.now(),
-                name: nameValue,
-                email: emailValue,
-                message: messageValue,
-                fileName: attachedFileName,
-                fileData: attachedFileData,
-                timestamp: new Date().toLocaleString()
-            };
-
-            let currentMessages = JSON.parse(localStorage.getItem('dinu_messages')) || [];
-            currentMessages.push(newMsg);
-            localStorage.setItem('dinu_messages', JSON.stringify(currentMessages));
-
-            alert('Message dispatched successfully to DINU Group database!');
-            document.getElementById('contactForm').reset();
-            document.getElementById('fileStatus').innerText = "📁 Click here to upload documents (PDF, Images)";
-            attachedFileData = "";
-            attachedFileName = "";
-        });
-
-        // Open Admin View Grid
-        function openAdmin() {
-            document.getElementById('clientGrid').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-            loadAdminMessages();
-        }
-
-        // Close Admin View Grid
-        function closeAdmin() {
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('clientGrid').style.display = 'grid';
-        }
-
-        // Load and Display Messages inside Dashboard
-        function loadAdminMessages() {
-            const container = document.getElementById('messagesContainer');
-            container.innerHTML = "";
-            const messages = JSON.parse(localStorage.getItem('dinu_messages')) || [];
-
-            if (messages.length === 0) {
-                container.innerHTML = "<p style='color: #64748b; text-align:center; padding: 40px;'>No incoming corporate messages found.</p>";
-                return;
-            }
-
-            // Show newest messages first
-            [...messages].reverse().forEach(msg => {
-                let fileHTML = "";
-                if (msg.fileData) {
-                    fileHTML = `<br><a href="${msg.fileData}" download="${msg.fileName}" class="file-link">📥 Download Attached File: ${msg.fileName}</a>`;
-                }
-
-                const block = document.createElement('div');
-                block.className = 'msg-box';
-                block.innerHTML = `
-                    <div class="msg-meta"><strong>From:</strong> ${msg.name} (${msg.email}) | 📅 ${msg.timestamp}</div>
-                    <div class="msg-body">${msg.message}</div>
-                    ${fileHTML}
-                `;
-                container.appendChild(block);
-            });
-        }
-    </script>
-</body>
-</html>
