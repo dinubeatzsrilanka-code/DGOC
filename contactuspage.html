@@ -427,14 +427,14 @@
             const form = e.target;
             const submitBtn = document.getElementById('submitBtn');
             
-            // Create form data manually to EXCLUDE the file from Web3Forms request
+            // Web3Forms එකට text විතරක් යවන්න FormData එකක් හදනවා (File එක අතහරිනවා)
             const formData = new FormData();
             formData.append("access_key", form.access_key.value);
             formData.append("subject", form.subject.value);
             formData.append("name", document.getElementById('name').value.trim());
             formData.append("email", document.getElementById('email').value.trim());
             
-            // Add a note in email that file is stored in local dashboard
+            // ෆයිල් එකක් ඇටෑච් කරලා තියෙනවා නම් ඒක ගැන Email එකට පොඩි Note එකක් යනවා
             let customMessage = document.getElementById('message').value.trim();
             if (attachedFileName) {
                 customMessage += `\n\n[Note: User attached a file named "${attachedFileName}". Check the internal admin dashboard to download it.]`;
