@@ -312,7 +312,7 @@
 
     <div class="top-utility-bar">
         <a href="#" class="logo-text">DINU <span>GROUP</span></a>
-        <a href="index.html" class="btn-home">← Back to Services</a>
+        <a href="dinugroupofcompanies.html" class="btn-home">← Back to Services</a>
     </div>
 
     <div class="contact-wrapper">
@@ -345,7 +345,7 @@
             </div>
 
             <div class="contact-form-panel">
-                <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+                <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
                     
                     <input type="hidden" name="access_key" value="32d9aa6a-f867-4c51-8ecb-17f1d05b7030">
                     
@@ -368,7 +368,7 @@
                         <label>Attach Project Specifications / Files (Optional)</label>
                         <div class="file-input-wrapper">
                             <span class="file-label-text" id="fileStatus">📁 Click here to upload documents (PDF, Images)</span>
-                            <input type="file" name="attachment" id="fileAttachment" accept=".pdf, .png, .jpg, .jpeg, .doc, .docx">
+                            <input type="file" id="fileAttachment" accept=".pdf, .png, .jpg, .jpeg, .doc, .docx">
                         </div>
                     </div>
                     <button type="submit" id="submitBtn" class="btn-submit">Dispatch Message</button>
@@ -426,7 +426,20 @@
             
             const form = e.target;
             const submitBtn = document.getElementById('submitBtn');
-            const formData = new FormData(form);
+            
+            // Create form data manually to EXCLUDE the file from Web3Forms request
+            const formData = new FormData();
+            formData.append("access_key", form.access_key.value);
+            formData.append("subject", form.subject.value);
+            formData.append("name", document.getElementById('name').value.trim());
+            formData.append("email", document.getElementById('email').value.trim());
+            
+            // Add a note in email that file is stored in local dashboard
+            let customMessage = document.getElementById('message').value.trim();
+            if (attachedFileName) {
+                customMessage += `\n\n[Note: User attached a file named "${attachedFileName}". Check the internal admin dashboard to download it.]`;
+            }
+            formData.append("message", customMessage);
 
             submitBtn.disabled = true;
             submitBtn.innerText = "Dispatching to Server...";
