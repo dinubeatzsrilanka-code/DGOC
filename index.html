@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DINU GROUP OF COMPANIES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #050b14;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated High-Tech Corporate Background */
+        .tech-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0d1b2a 0%, #050b14 100%);
+            overflow: hidden;
+        }
+
+        /* Moving Light Effects in Background */
+        .tech-bg::before, .tech-bg::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3a86ff, #00f5d4);
+            filter: blur(120px);
+            opacity: 0.15;
+            animation: float 15s infinite alternate ease-in-out;
+        }
+
+        .tech-bg::after {
+            background: linear-gradient(45deg, #9b5de5, #3a86ff);
+            right: 10%;
+            bottom: 10%;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.2); }
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            background: rgba(5, 11, 20, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #3a86ff, #00f5d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00f5d4;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 80px 8% 60px 8%;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-section h2 {
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #00f5d4;
+            margin-bottom: 15px;
+        }
+
+        .hero-section h3 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .hero-section p {
+            font-size: 16px;
+            color: #a0aec0;
+            line-height: 1.7;
+        }
+
+        /* Companies Grid (Adjusted for 4 cards) */
+        .companies-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 4% 80px 4%;
+            flex-wrap: wrap;
+        }
+
+        .company-card {
+            background: rgba(13, 27, 42, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px 22px;
+            width: 280px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .company-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .company-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .card-electrical h4 { color: #3a86ff; }
+        .card-smarthomes h4 { color: #00f5d4; }
+        .card-webnexus h4 { color: #9b5de5; }
+        .card-otherservices h4 { color: #ff007f; }
+
+        .company-card p {
+            color: #a0aec0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13.5px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .btn-electrical { background: #3a86ff; color: white; }
+        .btn-electrical:hover { background: #2563eb; box-shadow: 0 0 15px rgba(58, 134, 255, 0.4); }
+
+        .btn-smarthomes { background: #00f5d4; color: #050b14; }
+        .btn-smarthomes:hover { background: #00ccb0; box-shadow: 0 0 15px rgba(0, 245, 212, 0.4); }
+
+        .btn-webnexus { background: #9b5de5; color: white; }
+        .btn-webnexus:hover { background: #8338ec; box-shadow: 0 0 15px rgba(155, 93, 229, 0.4); }
+
+        .btn-otherservices { background: #ff007f; color: white; }
+        .btn-otherservices:hover { background: #e0006c; box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 14px;
+            color: #4a5568;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(5, 11, 20, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tech-bg"></div>
+
+    <nav>
+        <div class="logo-area">
+            <h1>DINU GROUP</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Subsidiaries</a></li>
+            <li><a href="#">Corporate Profile</a></li>
+            <li><a href="contactuspage.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero-section">
+        <h2>The Next Generation Ecosystem</h2>
+        <h3>Diversified Engineering, Technology & Corporate Solutions</h3>
+        <p>Driven by tech-focused core leadership, DINU GROUP OF COMPANIES integrates heavy electrical systems, smart home living spaces, premier web paradigms, and multi-sector corporate services into a unified ecosystem.</p>
+    </section>
+
+    <div class="companies-container">
+        
+        <div class="company-card card-electrical">
+            <div>
+                <h4>DiNu Electricals</h4>
+                <p>High-end industrial wiring, heavy grid architecture, power distribution setups, and advanced engineering supply models tailored for modern infrastructures.</p>
+            </div>
+            <a href="dinu_electrical_page.html" class="cta-btn btn-electrical">Explore Engineering</a>
+        </div>
+
+        <div class="company-card card-smarthomes">
+            <div>
+                <h4>SMART HOMES BY DINU</h4>
+                <p>Next-gen luxury automation grids. Seamlessly linking security devices, intelligent voice matrices, automated lighting, and responsive AI climates.</p>
+            </div>
+            <a href="SMARTHOME.html" class="cta-btn btn-smarthomes">Experience Luxury</a>
+        </div>
+
+        <div class="company-card card-webnexus">
+            <div>
+                <h4>DINU Web Nexus</h4>
+                <p>High-performance web applications, custom UI/UX frameworks, e-commerce networks, and dedicated corporate software engineered to power digital brands.</p>
+            </div>
+            <a href="webnexus.html" class="cta-btn btn-webnexus">Connect Digital</a>
+        </div>
+
+        <!-- New 4th Card: Corporate & Environmental Services -->
+        <div class="company-card card-otherservices">
+            <div>
+                <h4>Corporate & Environmental Services</h4>
+                <p>Premium multi-sector industrial solutions including commercial-grade cleaning services, facility operations, management models, and strategic government tenders.</p>
+            </div>
+            <a href="cleaning.html" class="cta-btn btn-otherservices">View Corporate Solutions</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 DINU GROUP OF COMPANIES. All Rights Reserved. Propelled by Mindinu Manthuja.</p>
+    </footer>
+
+</body>
+</html>

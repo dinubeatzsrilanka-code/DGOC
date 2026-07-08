@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiNu Electricals - Explore Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle at center, #0d111a 0%, #05070c 100%);
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+        .back-btn {
+            align-self: flex-start;
+            color: #00b4d8;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+        .back-btn:hover {
+            background: rgba(0, 180, 216, 0.1);
+            box-shadow: 0 0 15px rgba(0, 180, 216, 0.3);
+            transform: translateX(-5px);
+        }
+        .main-content {
+            text-align: center;
+            max-width: 900px;
+            animation: fadeIn 1.2s ease-out;
+        }
+        .logo-container {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 20px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 35px rgba(0, 180, 216, 0.3), 0 0 35px rgba(255, 0, 127, 0.2);
+            animation: electricityPulse 4s infinite ease-in-out;
+        }
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.6rem;
+            color: #00b4d8;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(0, 180, 216, 0.6);
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .system-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(0, 180, 216, 0.15);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s ease;
+        }
+        .system-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #ff007f;
+            box-shadow: 0 0 10px #ff007f;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .system-card:hover {
+            transform: translateY(-5px);
+            border-color: #00b4d8;
+            box-shadow: 0 10px 30px rgba(0, 180, 216, 0.15);
+        }
+        .system-card:hover::before {
+            opacity: 1;
+        }
+        .system-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #f8fafc;
+            font-size: 18px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .system-card h3 span {
+            color: #ff007f;
+            font-size: 12px;
+            text-shadow: 0 0 8px #ff007f;
+        }
+        .system-card p {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* මෙතන තමයි අලුත් බොත්තමේ CSS තියෙන්නේ */
+        .order-btn {
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            padding: 15px 40px;
+            background: #ff8c00;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            border-radius: 8px;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            border: 2px solid #ff8c00;
+        }
+        .order-btn:hover {
+            background: transparent;
+            color: #ff8c00;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+        }
+
+        .footer-contact {
+            border-top: 1px solid rgba(0, 180, 216, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding-top: 20px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+        .footer-contact a {
+            color: #00b4d8;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .footer-contact a:hover {
+            text-shadow: 0 0 10px #00b4d8;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes electricityPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 35px rgba(0, 180, 216, 0.3), 0 0 35px rgba(255, 0, 127, 0.2); }
+            50% { transform: scale(1.03); box-shadow: 0 0 50px rgba(0, 180, 216, 0.5), 0 0 50px rgba(255, 0, 127, 0.4); }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#" onclick="history.back()" class="back-btn">< BACK TO ECOSYSTEM</a>
+
+    <div class="main-content">
+        <div class="logo-container">
+            <img src="dinuelectricalslogo.jpeg" alt="DiNu Electricals Logo">
+        </div>
+        <h1>DINU ELECTRICALS</h1>
+        <p class="subtitle">High-end industrial grid architectures, precision power distribution configurations, custom neon matrices, and advanced smart circuit models engineered systematically for heavy-duty infrastructures.</p>
+        
+        <div class="system-grid">
+            <div class="system-card">
+                <h3>Heavy Grid Setup <span>[SYS_ACTIVE]</span></h3>
+                <p>Deploying robust power distribution frameworks, high-capacity switchgear panels, and systematic industrial wiring layouts engineered for zero failure rates.</p>
+            </div>
+            <div class="system-card">
+                <h3>Custom Neons <span>[NEON_ON]</span></h3>
+                <p>Architecting custom neon lighting systems and structural ambiance grids integrated with low-voltage power modulators for aesthetic dominance.</p>
+            </div>
+            <div class="system-card">
+                <h3>Smart Circuits <span>[LOGIC_OK]</span></h3>
+                <p>Developing intelligent circuit nodes, solid-state relays, and automated load-balancing systems built to withstand high-frequency operational surges.</p>
+            </div>
+        </div>
+
+        <a href="dinu_electricals.html" class="order-btn">PLACE AN ORDER</a>
+
+    </div>
+
+    <div class="footer-contact">
+        CONNECT WITH US: PHONE: +94743466719 | EMAIL: <a href="mailto:dinubeatzsrilanka@gmail.com">dinubeatzsrilanka@gmail.com</a>
+    </div>
+
+</body>
+</html>

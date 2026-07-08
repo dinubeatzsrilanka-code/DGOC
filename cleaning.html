@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate & Environmental Services - DINU GROUP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #060b13;
+            color: #f1f5f9;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Top Bar - Premium Dark Style */
+        .top-utility-bar {
+            background: #0b1322;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #38bdf8;
+            letter-spacing: 1px;
+        }
+        .logo-text span { color: #4ade80; }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            padding: 10px 22px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-home {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-home:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .btn-contact {
+            background: #0284c7;
+            color: #ffffff;
+        }
+        .btn-contact:hover {
+            background: #0369a1;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Hero Banner Section */
+        .hero-banner {
+            background: radial-gradient(circle at 80% 20%, #0d2830 0%, #060b13 60%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 80px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 420px;
+            position: relative;
+        }
+
+        .hero-text-content {
+            max-width: 55%;
+            z-index: 2;
+        }
+
+        .corporate-badge {
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero-text-content h1 {
+            font-size: 38px;
+            color: #ffffff;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text-content p {
+            font-size: 16px;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        /* 2D Moving Illustration */
+        .illustration-container {
+            width: 35%;
+            height: 280px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .vector-element {
+            position: absolute;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            user-select: none;
+        }
+
+        .art-bg-circle {
+            width: 240px;
+            height: 240px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(74, 222, 128, 0.1));
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .art-tree {
+            font-size: 80px;
+            filter: drop-shadow(0 0 15px rgba(74, 222, 128, 0.3));
+            transform: translate(-40px, 10px);
+        }
+
+        .art-cleaner {
+            font-size: 90px;
+            filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.3));
+            transform: translate(40px, 20px);
+        }
+
+        .illustration-container:hover .art-tree {
+            transform: translate(-45px, -2px) scale(1.05) rotate(-3deg);
+        }
+
+        .illustration-container:hover .art-cleaner {
+            transform: translate(45px, 10px) scale(1.05) rotate(3deg);
+        }
+
+        /* Main Content Workspace */
+        .main-container {
+            padding: 80px 8% 100px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 28px;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .section-title p {
+            color: #64748b;
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
+        /* Classified Waste Management Panels */
+        .waste-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .waste-card {
+            background: #0b1322;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .waste-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .waste-icon {
+            font-size: 45px;
+            margin-bottom: 18px;
+            display: inline-block;
+        }
+
+        .waste-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .waste-card p {
+            font-size: 13.5px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .bin-paper { border-top: 4px solid #38bdf8; }
+        .bin-plastic { border-top: 4px solid #fbbf24; }
+        .bin-organic { border-top: 4px solid #4ade80; }
+        .bin-polythene { border-top: 4px solid #c084fc; }
+        .bin-liquid { border-top: 4px solid #22d3ee; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 35px;
+            background: #060b13;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            color: #475569;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Utility Navigation Bar -->
+    <div class="top-utility-bar">
+        <div class="logo-text">DINU <span>GROUP</span></div>
+        <div class="nav-buttons">
+            <a href="dinugroupofcompanies.html" class="btn-nav btn-home">← Back to Main Ecosystem</a>
+            <!-- Direct Mobile Call Option -->
+            <a href="contactuspage.html" class="btn-nav btn-contact">Call Corporate Desk</a>
+        </div>
+    </div>
+
+    <!-- Hero Banner Framework -->
+    <div class="hero-banner">
+        <div class="hero-text-content">
+            <span class="corporate-badge">Standard Compliance Operations</span>
+            <h1>Trustworthy, Beautiful Environment & Best Quality Cleaning Services</h1>
+            <p>DINU Corporate & Environmental Services deploys next-generation waste processing paradigms, experienced on-site human capital, and sustainable cleaning frameworks meticulously engineered for heavy utility stations, corporate offices, and institutional sectors.</p>
+        </div>
+
+        <div class="illustration-container">
+            <div class="art-bg-circle vector-element"></div>
+            <div class="art-tree vector-element">🌳</div>
+            <div class="art-cleaner vector-element">✨</div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <div class="section-title">
+            <h2>Classified Solid & Liquid Waste Management Platforms</h2>
+            <p>Strict structural adherence to green environment policy and segregation mechanics.</p>
+        </div>
+
+        <!-- Classified Trash Sorting Categories -->
+        <div class="waste-grid">
+            <div class="waste-card bin-paper">
+                <span class="waste-icon">📄</span>
+                <h3>Paper Material</h3>
+                <p>Industrial shredded paper, document recycling, and office cardboard disposal grids.</p>
+            </div>
+            <div class="waste-card bin-plastic">
+                <span class="waste-icon">🥤</span>
+                <h3>Plastic Ware</h3>
+                <p>High-density PET bottles, corporate plastic goods extraction and systematic recycling.</p>
+            </div>
+            <div class="waste-card bin-organic">
+                <span class="waste-icon">🍏</span>
+                <h3>Organic Food</h3>
+                <p>Biodegradable waste matrixes from canteens safely processed into eco-fertilizers.</p>
+            </div>
+            <div class="waste-card bin-polythene">
+                <span class="waste-icon">🛍️</span>
+                <h3>Polythene Wrap</h3>
+                <p>Packaging films, wrappers, and non-porous synthetics processed under safe conditions.</p>
+            </div>
+            <div class="waste-card bin-liquid">
+                <span class="waste-icon">💧</span>
+                <h3>Liquid Waste</h3>
+                <p>Safe extraction, purification filtration, and certified disposal of non-toxic commercial fluids.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 DINU GROUP OF COMPANIES. All Corporate Operations Led by Mindinu Manthuja.</p>
+    </footer>
+
+</body>
+</html>

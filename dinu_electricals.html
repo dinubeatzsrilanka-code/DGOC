@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiNu Electricals - Explore Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: radial-gradient(circle at center, #0d111a 0%, #05070c 100%); color: #ffffff; font-family: 'Rajdhani', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        .nav-bar { width: 100%; max-width: 750px; display: flex; justify-content: flex-start; margin-bottom: 20px; }
+        .back-btn { color: #00b4d8; text-decoration: none; font-family: 'Orbitron'; font-size: 13px; border: 1px solid rgba(0, 180, 216, 0.2); padding: 8px 16px; border-radius: 4px; transition: 0.3s; }
+        .back-btn:hover { background: rgba(0, 180, 216, 0.1); box-shadow: 0 0 15px rgba(0, 180, 216, 0.3); }
+        .main-content { text-align: center; width: 100%; max-width: 750px; }
+        
+        .secret-admin-title { font-family: 'Orbitron', sans-serif; color: #00b4d8; letter-spacing: 2px; margin-bottom: 20px; cursor: default; text-decoration: none; display: inline-block; }
+        
+        .interactive-container { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 180, 216, 0.2); border-radius: 16px; padding: 30px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        .tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; }
+        .tab-btn { background: none; border: none; color: #94a3b8; font-family: 'Orbitron'; font-size: 16px; cursor: pointer; padding: 10px 20px; transition: 0.3s; }
+        .tab-btn.active { color: #00b4d8; border-bottom: 2px solid #00b4d8; text-shadow: 0 0 10px rgba(0, 180, 216, 0.5); }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        .form-group { text-align: left; margin-bottom: 20px; }
+        .form-group label { display: block; font-family: 'Orbitron'; font-size: 13px; color: #00b4d8; margin-bottom: 8px; }
+        .form-control { width: 100%; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(0, 180, 216, 0.2); border-radius: 6px; padding: 12px; color: #fff; font-size: 16px; font-family: 'Rajdhani'; }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 8px; color: #94a3b8; }
+        .action-btn { width: 100%; background: linear-gradient(90deg, #00b4d8, #ff007f); border: none; padding: 14px; border-radius: 8px; color: white; font-family: 'Orbitron'; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.4s; }
+        .action-btn:hover { box-shadow: 0 0 25px #ff007f; }
+        .success-banner { display: none; background: rgba(0, 180, 216, 0.1); border: 1px solid #00b4d8; border-radius: 8px; padding: 20px; margin-top: 25px; }
+        .generated-id { font-family: 'Orbitron'; font-size: 26px; color: #ff007f; font-weight: bold; margin: 10px 0; text-shadow: 0 0 10px #ff007f; }
+        
+        .tracker-box { background: rgba(30, 41, 59, 0.4); border: 1px dashed #ff007f; border-radius: 8px; padding: 25px; margin-top: 25px; display: none; text-align: left; }
+        .cost-matrix { background: rgba(0, 180, 216, 0.1); border: 1px solid #00b4d8; padding: 15px; border-radius: 6px; margin: 15px 0; font-family: 'Orbitron'; text-align: center; box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
+        .cost-val { color: #00b4d8; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px rgba(0, 180, 216, 0.5); }
+        
+        .courier-box { background: rgba(255, 0, 127, 0.1); border: 1px solid #ff007f; border-radius: 6px; padding: 15px; margin: 15px 0; display: none; }
+        .courier-link-btn { display: block; text-align: center; background: #ff007f; color: #fff; text-decoration: none; font-family: 'Orbitron'; font-weight: bold; font-size: 13px; padding: 10px; margin-top: 10px; border-radius: 4px; box-shadow: 0 0 10px rgba(255,0,127,0.4); transition: 0.3s; }
+        .courier-link-btn:hover { box-shadow: 0 0 20px #ff007f; background: #e0006c; }
+    </style>
+</head>
+<body>
+
+    <div class="nav-bar">
+        <a href="#" onclick="history.back()" class="back-btn">< BACK</a>
+    </div>
+
+    <div class="main-content">
+        <a href="admincontrollinunit.html" class="secret-admin-title"><h1>DINU ELECTRICALS</h1></a>
+        
+        <div class="interactive-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('launch')">LAUNCH PROJECT</button>
+                <button class="tab-btn" onclick="switchTab('track')">TRACK MATRIX</button>
+            </div>
+
+            <div id="launchPanel" class="tab-panel active">
+                <form id="projectForm" onsubmit="submitOrder(event)">
+                    <div class="form-group"><label>CLIENT NAME</label><input type="text" id="cName" class="form-control" required></div>
+                    <div class="form-group"><label>CONTACT NO</label><input type="tel" id="cPhone" class="form-control" required></div>
+                    <div class="form-group"><label>BILLING ADDRESS</label><input type="text" id="billingAddr" class="form-control" required></div>
+                    <div class="form-group">
+                        <label>SERVICE LOCATION</label>
+                        <input type="text" id="serviceAddr" class="form-control" required>
+                        <label class="checkbox-container"><input type="checkbox" id="sameLocation" onchange="syncLocation()"> Same as Billing</label>
+                    </div>
+                    <div class="form-group"><label>DESCRIPTION</label><textarea id="cDesc" class="form-control" rows="3" required></textarea></div>
+                    <div class="form-group"><label>SPECIAL NOTES</label><textarea id="cNotes" class="form-control" rows="2"></textarea></div>
+                    <button type="submit" class="action-btn">TRANSMIT REQUEST MATRIX</button>
+                </form>
+                <div class="success-banner" id="successBanner">
+                    <h4>📡 PROJECT CHANNELS OPENED SUCCESSFULLY!</h4>
+                    <div class="generated-id" id="displayID"></div>
+                </div>
+            </div>
+
+            <div id="trackPanel" class="tab-panel">
+                <div class="form-group"><label>SECURE TRACKING ID</label><input type="text" id="trackInput" class="form-control" placeholder="EX: DINU-4829"></div>
+                <button class="action-btn" onclick="trackProject()">INITIALIZE MATRIX TRACKING</button>
+                <div class="tracker-box" id="trackerBox">
+                    <h3 id="trackTitle" style="color:#00b4d8; font-family:'Orbitron';"></h3>
+                    
+                    <div class="cost-matrix">
+                        <div style="font-size: 11px; color: #94a3b8; letter-spacing: 1px;">ESTIMATED INVESTMENT MATRIX</div>
+                        <div class="cost-val" id="trackCost">LKR 0.00</div>
+                    </div>
+
+                    <div class="courier-box" id="courierBox">
+                        <div style="font-family:'Orbitron'; font-size:12px; color:#ff007f; margin-bottom:5px;">🚛 COURIER DISPATCH DATA</div>
+                        <p style="font-size:15px; color:#cbd5e0;"><b>Company:</b> <span id="lblCourierName" style="color:#fff;"></span></p>
+                        <p style="font-size:15px; color:#cbd5e0;"><b>Waybill ID:</b> <span id="lblCourierTrackID" style="color:#00b4d8; font-family:'Orbitron';"></span></p>
+                        <a href="#" id="btnCourierWeb" target="_blank" class="courier-link-btn">TRACK VIA COURIER WEBSITE 🌐</a>
+                    </div>
+
+                    <p id="trackDetails" style="margin-top:10px; color:#cbd5e0; line-height: 1.6;"></p>
+                    <div style="margin-top:15px; font-family: 'Orbitron'; font-size: 14px;">⚡ LIVE STATUS: <span id="statusText" style="color:#ff007f; font-weight:bold;"></span></div>
+                    <img id="statusImg" style="width:100%; margin-top:15px; display:none; border-radius:8px; border: 1px solid rgba(255,0,127,0.3);" src="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(t) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            if(t==='launch'){ document.querySelectorAll('.tab-btn')[0].classList.add('active'); document.getElementById('launchPanel').classList.add('active'); }
+            else { document.querySelectorAll('.tab-btn')[1].classList.add('active'); document.getElementById('trackPanel').classList.add('active'); }
+        }
+        function syncLocation() {
+            var cb = document.getElementById('sameLocation'), b = document.getElementById('billingAddr'), s = document.getElementById('serviceAddr');
+            if(cb.checked) { s.value = b.value; s.disabled = true; } else { s.disabled = false; }
+        }
+        function submitOrder(e) {
+            e.preventDefault();
+            var id = "DINU-" + Math.floor(1000 + Math.random() * 9000);
+            var loc = document.getElementById('sameLocation').checked ? document.getElementById('billingAddr').value : document.getElementById('serviceAddr').value;
+            var order = { id: id, unit: "DiNu Electricals", name: document.getElementById('cName').value, phone: document.getElementById('cPhone').value, billing: document.getElementById('billingAddr').value, service: loc, desc: document.getElementById('cDesc').value, notes: document.getElementById('cNotes').value, status: "PENDING REVIEW", photo: "", cost: "Pending Valuation", courierName: "", courierId: "", courierWeb: "" };
+            var orders = JSON.parse(localStorage.getItem('dinu_orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('dinu_orders', JSON.stringify(orders));
+            document.getElementById('displayID').innerText = id;
+            document.getElementById('successBanner').style.display = 'block';
+            document.getElementById('projectForm').reset();
+            document.getElementById('serviceAddr').disabled = false;
+        }
+        
+        // 🛠️ FIX: නිවැරදි කර ඇති Track Project Function එක
+        function trackProject() {
+            var input = document.getElementById('trackInput').value.trim().toUpperCase();
+            var orders = JSON.parse(localStorage.getItem('dinu_orders') || '[]');
+            var order = orders.find(o => o.id === input);
+            var box = document.getElementById('trackerBox');
+            
+            if(order) {
+                box.style.display = 'block';
+                document.getElementById('trackTitle').innerText = "NODE ID: " + order.id;
+                
+                // Cost validation
+                document.getElementById('trackCost').innerText = order.cost ? (isNaN(order.cost) ? order.cost : "LKR " + parseFloat(order.cost).toLocaleString('en-US', {minimumFractionDigits: 2})) : "Pending Valuation";
+                
+                // 🔐 SAFE COURIER CHECK (කුරියර් ඩේටා නැති වුණත් කෝඩ් එක ක්‍රෑෂ් වෙන්නේ නෑ)
+                var cBox = document.getElementById('courierBox');
+                if(order.hasOwnProperty('courierId') && order.courierId && order.courierName) {
+                    cBox.style.display = 'block';
+                    document.getElementById('lblCourierName').innerText = order.courierName;
+                    document.getElementById('lblCourierTrackID').innerText = order.courierId;
+                    
+                    var url = order.courierWeb || '';
+                    if(url && !/^https?:\/\//i.test(url)) url = 'https://' + url;
+                    
+                    var btnWeb = document.getElementById('btnCourierWeb');
+                    if(url) {
+                        btnWeb.href = url;
+                        btnWeb.style.display = 'block';
+                    } else {
+                        btnWeb.style.display = 'none';
+                    }
+                } else {
+                    cBox.style.display = 'none';
+                }
+
+                document.getElementById('trackDetails').innerHTML = "<b>Client Name:</b> " + order.name + "<br><b>Grid Location:</b> " + order.service + "<br><b>Job Matrix:</b> " + order.desc + "<br><b>Special Notes:</b> " + (order.notes || "None");
+                document.getElementById('statusText').innerText = order.status;
+                
+                var img = document.getElementById('statusImg');
+                if(order.photo) { img.src = order.photo; img.style.display = 'block'; } else { img.style.display = 'none'; }
+            } else { 
+                alert("Tracking Matrix ID not found."); 
+                box.style.display = 'none'; 
+            }
+        }
+    </script>
+</body>
+</html>

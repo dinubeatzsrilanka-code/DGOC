@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiNu Electricals - Order & Track</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #050b14; color: #ffffff; padding: 40px 8%; }
+        h1 { color: #3a86ff; margin-bottom: 10px; }
+        .back-btn { color: #a0aec0; text-decoration: none; display: inline-block; margin-bottom: 20px; font-size: 14px; }
+        .container { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 20px; }
+        .box { background: rgba(13, 27, 42, 0.5); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 30px; border-radius: 16px; flex: 1; min-width: 300px; }
+        label { display: block; margin: 15px 0 5px; color: #a0aec0; font-size: 14px; }
+        input, textarea { width: 100%; padding: 12px; background: #0b1524; border: 1px solid #1e2d42; border-radius: 8px; color: white; font-size: 15px; }
+        input:focus, textarea:focus { border-color: #3a86ff; outline: none; }
+        button { background: #3a86ff; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #2563eb; box-shadow: 0 0 15px rgba(58, 134, 255, 0.4); }
+        .status-box { background: #0b1524; padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #00f5d4; display: none; }
+        .footer-contact { margin-top: 50px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 20px; color: #a0aec0; font-size: 14px; }
+        .footer-contact a { color: #00f5d4; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <a href="#" onclick="history.back()" class="back-btn">← Back to Dinu Group</a>
+    <h1>⚡ DiNu Electricals</h1>
+    <p style="color: #a0aec0;">Submit your service requests or track your project status in real-time.</p>
+
+    <div class="container">
+        <div class="box">
+            <h3>Request an Electrical Service</h3>
+            <form id="orderForm">
+                <label>Full Name</label>
+                <input type="text" id="fullName" required>
+                
+                <label>Contact Number</label>
+                <input type="text" id="contactNo" required>
+                
+                <label>Installation Address</label>
+                <input type="text" id="address" required>
+                
+                <label>Service Description (LED Systems, Wiring, etc.)</label>
+                <textarea id="description" rows="4" required></textarea>
+                
+                <button type="submit">Submit Request</button>
+            </form>
+        </div>
+
+        <div class="box">
+            <h3>Track Your Project Status</h3>
+            <label>Enter Reference Number</label>
+            <input type="text" id="refInput" placeholder="e.g., DINU-1234">
+            <button onclick="trackOrder()">Track Status</button>
+
+            <div id="statusResult" class="status-box">
+                <h4 id="statusTitle" style="color: #00f5d4; margin-bottom: 10px;">Status: Pending</h4>
+                <p id="statusDesc" style="font-size: 14px; color: #bdc3c7;"></p>
+                <div id="projectPhoto" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-contact">
+        <p>සම්බන්ධ කරගන්න (Contact Us): Hotline: <strong>+94743466719</strong> | Email: <a href="mailto:dinubeatzsrilanka@gmail.com">dinubeatzsrilanka@gmail.com</a></p>
+    </div>
+
+    <script>
+        // Form Submission
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const refNo = 'DINU-' + Math.floor(1000 + Math.random() * 9000);
+            const orderData = {
+                refNo: refNo,
+                name: document.getElementById('fullName').value,
+                phone: document.getElementById('contactNo').value,
+                address: document.getElementById('address').value,
+                desc: document.getElementById('description').value,
+                time: new Date().toLocaleString(),
+                status: 'Pending Review',
+                photo: ''
+            };
+
+            let orders = JSON.parse(localStorage.getItem('dinu_orders')) || [];
+            orders.push(orderData);
+            localStorage.setItem('dinu_orders', JSON.stringify(orders));
+
+            alert('Request Submitted Successfully!\nYour Reference Number is: ' + refNo + '\nPlease save this number to track your work.');
+            document.getElementById('orderForm').reset();
+        });
+
+        // Tracking Function
+        function trackOrder() {
+            const ref = document.getElementById('refInput').value.trim();
+            let orders = JSON.parse(localStorage.getItem('dinu_orders')) || [];
+            const found = orders.find(o => o.refNo === ref);
+
+            const resultBox = document.getElementById('statusResult');
+            if(found) {
+                resultBox.style.display = 'block';
+                document.getElementById('statusTitle').innerText = 'Status: ' + found.status;
+                document.getElementById('statusDesc').innerText = 'Client: ' + found.name + '\nJob: ' + found.desc;
+                
+                if(found.photo) {
+                    document.getElementById('projectPhoto').innerHTML = `<h5>Work Progress Photo:</h5><img src="${found.photo}" style="width:100%; border-radius:8px; margin-top:10px; border: 1px solid #3a86ff;">`;
+                } else {
+                    document.getElementById('projectPhoto').innerHTML = '<p style="font-size:12px; color:#718096; margin-top:10px;">No progress photos uploaded yet.</p>';
+                }
+            } else {
+                alert('Reference Number not found!');
+                resultBox.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
