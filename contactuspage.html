@@ -174,6 +174,7 @@
             border-radius: 16px;
             padding: 35px;
         }
+
         .form-group {
             margin-bottom: 22px;
         }
@@ -343,8 +344,7 @@
                 </div>
             </div>
 
-            
-<div class="contact-form-panel">
+            <div class="contact-form-panel">
                 <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
                     
                     <input type="hidden" name="access_key" value="32d9aa6a-f867-4c51-8ecb-17f1d05b7030">
@@ -356,3 +356,165 @@
                         <label for="name">Your Name / Company Name</label>
                         <input type="text" name="name" id="name" placeholder="Ex: ABC Pvt Ltd" required oninput="checkSecretKey(this.value)">
                     </div>
+                    <div class="form-group">
+                        <label for="email">Business Email Address</label>
+                        <input type="email" name="email" id="email" placeholder="name@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Project Requirements / Message</label>
+                        <textarea name="message" id="message" rows="4" placeholder="Describe the cleaning or corporate services plan required..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Attach Project Specifications / Files (Optional)</label>
+                        <div class="file-input-wrapper">
+                            <span class="file-label-text" id="fileStatus">📁 Click here to upload documents (PDF, Images)</span>
+                            <input type="file" name="attachment" id="fileAttachment" accept=".pdf, .png, .jpg, .jpeg, .doc, .docx">
+                        </div>
+                    </div>
+                    <button type="submit" id="submitBtn" class="btn-submit">Dispatch Message</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header">
+                <h2>DINU GROUP - Internal Messages Desk</h2>
+                <div>
+                    <button class="btn-clear" onclick="clearAllMessages()">Clear Logs</button>
+                    <button class="btn-logout" onclick="closeAdmin()">Exit Dashboard</button>
+                </div>
+            </div>
+            <div id="messagesContainer">
+                </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 DINU GROUP OF COMPANIES. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const SECRET_KEY = "DINU@2026"; 
+        let attachedFileData = "";
+        let attachedFileName = "";
+
+        function checkSecretKey(value) {
+            if (value.trim() === SECRET_KEY) {
+                openAdmin();
+                document.getElementById('contactForm').reset();
+                document.getElementById('fileStatus').innerText = "📁 Click here to upload documents (PDF, Images)";
+            }
+        }
+
+        document.getElementById('fileAttachment').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                attachedFileName = file.name;
+                document.getElementById('fileStatus').innerText = "✅ Attached: " + file.name;
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    attachedFileData = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const formData = new FormData(form);
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Dispatching to Server...";
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const newMsg = {
+                        id: Date.now(),
+                        name: document.getElementById('name').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        message: document.getElementById('message').value.trim(),
+                        fileName: attachedFileName,
+                        fileData: attachedFileData,
+                        timestamp: new Date().toLocaleString()
+                    };
+
+                    let currentMessages = JSON.parse(localStorage.getItem('dinu_messages')) || [];
+                    currentMessages.push(newMsg);
+                    localStorage.setItem('dinu_messages', JSON.stringify(currentMessages));
+
+                    alert('Success! Message dispatched directly to Admin Email and Cloud Server.');
+                    form.reset();
+                    document.getElementById('fileStatus').innerText = "📁 Click here to upload documents (PDF, Images)";
+                    attachedFileData = "";
+                    attachedFileName = "";
+                } else {
+                    alert('Submission error: ' + data.message + '\n\nPlease ensure your Access Key is correct.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Network error occurred. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Dispatch Message";
+            });
+        });
+
+        function openAdmin() {
+            document.getElementById('clientGrid').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadAdminMessages();
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('clientGrid').style.display = 'grid';
+        }
+
+        function clearAllMessages() {
+            if (confirm("Are you sure you want to permanently clear all local logs on this browser?")) {
+                localStorage.removeItem('dinu_messages');
+                loadAdminMessages();
+            }
+        }
+
+        function loadAdminMessages() {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = "";
+            const messages = JSON.parse(localStorage.getItem('dinu_messages')) || [];
+
+            if (messages.length === 0) {
+                container.innerHTML = "<p style='color: #64748b; text-align:center; padding: 40px;'>No corporate messages stored on this browser.</p>";
+                return;
+            }
+
+            [...messages].reverse().forEach(msg => {
+                let fileHTML = "";
+                if (msg.fileData) {
+                    fileHTML = `<br><a href="${msg.fileData}" download="${msg.fileName}" class="file-link">📥 Download Attached File: ${msg.fileName}</a>`;
+                }
+
+                const block = document.createElement('div');
+                block.className = 'msg-box';
+                block.innerHTML = `
+                    <div class="msg-meta"><strong>From:</strong> ${msg.name} (${msg.email}) | 📅 ${msg.timestamp}</div>
+                    <div class="msg-body">${msg.message}</div>
+                    ${fileHTML}
+                `;
+                container.appendChild(block);
+            });
+        }
+    </script>
+</body>
+</html>
